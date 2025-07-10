@@ -1,68 +1,227 @@
-# CodeIgniter 4 Application Starter
+# Sistem Manajemen Sarana Prasarana SMK Abdurrab Pekanbaru
 
-## What is CodeIgniter?
+Sistem informasi berbasis web untuk mengelola sarana dan prasarana di SMK Abdurrab Pekanbaru. Memudahkan proses peminjaman barang, pelaporan kerusakan, dan manajemen inventaris sekolah.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## 📋 Daftar Isi
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- [Tentang Project](#tentang-project)
+- [Fitur](#fitur)
+- [Teknologi](#teknologi)
+- [Instalasi](#instalasi)
+- [Cara Penggunaan](#cara-penggunaan)
+- [Screenshot](#screenshot)
+- [Role & Akses](#role--akses)
+- [Struktur Database](#struktur-database)
+- [Kontribusi](#kontribusi)
+- [Lisensi](#lisensi)
+- [Kontak](#kontak)
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## 🎯 Tentang Project
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+Sistem Manajemen Sarana Prasarana SMK Abdurrab Pekanbaru adalah aplikasi web yang dirancang untuk:
+- Mengelola inventaris sarana dan prasarana sekolah
+- Memfasilitasi proses peminjaman barang oleh siswa dan guru
+- Monitoring dan pelaporan kerusakan barang
+- Menyediakan dashboard analitik untuk kepala sekolah dan administrator
 
-## Installation & updates
+Project ini dikembangkan untuk meningkatkan efisiensi pengelolaan aset sekolah dan memberikan transparansi dalam proses peminjaman barang.
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## ✨ Fitur
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### 👤 Fitur User (Siswa/Guru)
+- [x] Login dan autentikasi
+- [x] Melihat daftar barang tersedia
+- [x] Mengajukan peminjaman barang
+- [x] Melihat status peminjaman
+- [x] Melaporkan kerusakan barang
+- [x] Riwayat peminjaman pribadi
 
-## Setup
+### 👨‍💼 Fitur Kepala Sekolah
+- [x] Dashboard overview sarana prasarana
+- [x] Laporan statistik peminjaman
+- [x] Laporan kerusakan barang
+- [x] Monitoring aktivitas sistem
+- [x] Approve/reject peminjaman khusus
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+### 🔧 Fitur Administrator
+- [x] Manajemen data barang
+- [x] Manajemen kategori barang
+- [x] Manajemen pengguna (CRUD)
+- [x] Approve/reject peminjaman
+- [x] Manajemen laporan kerusakan
+- [x] Backup dan restore data
+- [x] Laporan lengkap sistem
 
-## Important Change with index.php
+## 🛠️ Teknologi
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+**Backend:**
+- PHP 8.0+
+- CodeIgniter 4
+- MySQL 8.0+
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+**Frontend:**
+- HTML5
+- CSS3
+- JavaScript ES6+
+- Bootstrap 5
+- Chart.js (untuk dashboard)
 
-**Please** read the user guide for a better explanation of how CI4 works!
+**Tools:**
+- Composer
+- Git
+- XAMPP/LAMP
 
-## Repository Management
+## 🚀 Instalasi
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### Prasyarat
+```bash
+# Pastikan PHP dan Composer terinstall
+php --version
+composer --version
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+# MySQL/MariaDB
+mysql --version
+```
 
-## Server Requirements
+### Langkah Instalasi
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+1. **Clone repository**
+```bash
+git clone https://github.com/fixxyinhere/smp_smk_abdurrab.git
+cd smp_smk_abdurrab
+```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+2. **Install dependencies**
+```bash
+composer install
+```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+3. **Setup database**
+```bash
+# Buat database MySQL
+mysql -u root -p
+CREATE DATABASE smp_smk_abdurrab;
+exit
+```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+4. **Konfigurasi environment**
+```bash
+# Copy file environment
+cp env .env
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+# Edit file .env dan sesuaikan:
+# database.default.hostname = localhost
+# database.default.database = smp_smk_abdurrab
+# database.default.username = root
+# database.default.password = 
+```
+
+5. **Migrate database**
+```bash
+php spark migrate
+php spark db:seed DatabaseSeeder
+```
+
+6. **Jalankan aplikasi**
+```bash
+php spark serve
+```
+
+Akses aplikasi di: `http://localhost:8080`
+
+## 📖 Cara Penggunaan
+
+### Login Default
+- **Administrator**: admin@smkabdurrab.id | password: admin123
+- **Kepala Sekolah**: kepsek@smkabdurrab.id | password: kepsek123  
+- **User Demo**: demo@smkabdurrab.id | password: demo123
+
+### Alur Peminjaman Barang
+1. User login ke sistem
+2. Pilih barang yang ingin dipinjam
+3. Isi form peminjaman (tanggal, keperluan, dll)
+4. Submit permintaan peminjaman
+5. Admin approve/reject peminjaman
+6. Barang siap dipinjam (jika disetujui)
+
+### Pelaporan Kerusakan
+1. User menemukan barang rusak
+2. Buat laporan kerusakan dengan detail
+3. Admin memverifikasi laporan
+4. Tindakan perbaikan/penggantian barang
+
+## 📸 Screenshot
+
+### Halaman Login
+![Login Page](screenshots/login.jpg)
+*Halaman login dengan pilihan role user dan admin/kepsek*
+
+### Dashboard Kepala Sekolah
+![Dashboard Kepsek](screenshots/dashboard-kepsek.jpg)
+*Dashboard overview dengan statistik total barang, user, dan laporan*
+
+### Dashboard Administrator
+![Dashboard Admin](screenshots/dashboard-admin.jpg)
+*Dashboard admin dengan akses penuh ke semua fitur manajemen*
+
+### Dashboard User
+![Dashboard User](screenshots/dashboard-user.jpg)
+*Dashboard user dengan akses peminjaman dan pelaporan*
+
+## 👥 Role & Akses
+
+| Fitur | User | Kepsek | Admin |
+|-------|------|--------|-------|
+| Login | ✅ | ✅ | ✅ |
+| Lihat Barang | ✅ | ✅ | ✅ |
+| Pinjam Barang | ✅ | ✅ | ✅ |
+| Lapor Kerusakan | ✅ | ✅ | ✅ |
+| Dashboard Statistik | ❌ | ✅ | ✅ |
+| Manajemen Barang | ❌ | ❌ | ✅ |
+| Manajemen User | ❌ | ❌ | ✅ |
+| Approve Peminjaman | ❌ | ✅ | ✅ |
+
+## 🗄️ Struktur Database
+
+**Tabel Utama:**
+- `users` - Data pengguna sistem
+- `barang` - Data inventaris barang
+- `kategori` - Kategori barang
+- `peminjaman` - Transaksi peminjaman
+- `laporan_kerusakan` - Laporan kerusakan barang
+- `data_pinjaman` - Detail peminjaman barang
+
+## 🤝 Kontribusi
+
+Kontribusi sangat diterima! Silakan ikuti langkah berikut:
+
+1. Fork project ini
+2. Buat branch fitur (`git checkout -b feature/NewFeature`)
+3. Commit perubahan (`git commit -m 'Add: New feature'`)
+4. Push ke branch (`git push origin feature/NewFeature`)
+5. Buat Pull Request
+
+### Coding Standards
+- Gunakan PSR-4 untuk autoloading
+- Ikuti CodeIgniter 4 best practices
+- Tambahkan komentar pada kode kompleks
+- Test fitur sebelum submit PR
+
+## 📝 Lisensi
+
+Project ini menggunakan lisensi [MIT](LICENSE).
+
+## 📧 Kontak
+
+**Developer**: fixxyinhere  
+**Email**: [your-email@example.com](mailto:your-email@example.com)  
+**GitHub**: [@fixxyinhere](https://github.com/fixxyinhere)
+
+**Project Links:**
+- **Repository**: [https://github.com/fixxyinhere/smp_smk_abdurrab](https://github.com/fixxyinhere/smp_smk_abdurrab)
+- **Issues**: [https://github.com/fixxyinhere/smp_smk_abdurrab/issues](https://github.com/fixxyinhere/smp_smk_abdurrab/issues)
+
+---
+
+🏫 **SMK Abdurrab Pekanbaru** - Sistem Manajemen Sarana Prasarana  
+⭐ Jangan lupa kasih star kalau project ini membantu!
