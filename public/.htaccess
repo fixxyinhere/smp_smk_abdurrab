@@ -1,0 +1,41 @@
+# File: public/.htaccess
+###########################################
+# Disable server signature start
+###########################################
+ServerSignature Off
+
+###########################################
+# Disable server signature end
+###########################################
+
+RewriteEngine On
+
+# Handle Angular and Vue.js requests
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+# Disable server info
+RewriteCond %{QUERY_STRING} \=PHP[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12} [NC]
+RewriteRule .* - [F]
+
+# Return 403 Forbidden for readme.(txt|html) or license.(txt|html) or example.(txt|html) or other common git repository files
+RewriteRule ^(readme|license|example|README|LEGALNOTICE|INSTALLATION|CHANGELOG)\.(txt|html)$ - [F]
+
+# Deny access to patch files
+RewriteRule "\.(orig|rej)$" - [F]
+
+# Deny access to Git and SVN folders
+RewriteRule ^(\.git|\.svn) - [F]
+
+# Disable XML-RPC
+RewriteRule ^xmlrpc\.php$ - [F,L]
+
+# Block access to includes folder
+RewriteRule ^inc/ - [F,L]
+
+# Block access to base folder
+RewriteRule ^base/ - [F,L]
+
+# Block access to other folders
+RewriteRule ^(logs|tmp|lang|tests|core|gulpfile\.js|package\.json|composer\.json|composer\.lock|web\.config|\.[\w\-]+)$ - [F,L]
