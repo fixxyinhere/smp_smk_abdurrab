@@ -8,13 +8,30 @@ $this->section('content');
     <h1 class="h2">Laporan Kerusakan</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group me-2">
-            <a href="/reports/export/damages" class="btn btn-outline-danger">
-                <i class="fas fa-download me-2"></i>Export CSV
-            </a>
-            <a href="/reports" class="btn btn-outline-primary">
-                <i class="fas fa-arrow-left me-2"></i>Kembali
-            </a>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-download me-2"></i>Export
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="/reports/export/damages/csv">
+                            <i class="fas fa-file-csv me-2 text-success"></i>Export CSV
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/reports/export/damages/pdf" target="_blank">
+                            <i class="fas fa-file-pdf me-2 text-danger"></i>Export PDF
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-outline-primary" onclick="window.print()">
+                <i class="fas fa-print me-2"></i>Print
+            </button>
         </div>
+        <a href="/reports" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Kembali
+        </a>
     </div>
 </div>
 
@@ -53,6 +70,36 @@ $this->section('content');
         </div>
     </div>
 </div>
+
+<!-- Urgent Reports Alert -->
+<?php
+$urgentReports = array_filter($damages, function ($damage) {
+    return $damage['priority'] === 'urgent' && $damage['status'] !== 'resolved';
+});
+?>
+<?php if (!empty($urgentReports)): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+            <div>
+                <h5 class="alert-heading mb-1">⚠️ PERHATIAN: Laporan Prioritas Urgent!</h5>
+                <p class="mb-1">Terdapat <strong><?= count($urgentReports) ?> laporan</strong> dengan prioritas urgent yang membutuhkan penanganan segera:</p>
+                <ul class="mb-2">
+                    <?php foreach (array_slice($urgentReports, 0, 3) as $urgent): ?>
+                        <li><strong><?= $urgent['report_number'] ?></strong> - <?= $urgent['item_name'] ?> (<?= ucfirst($urgent['damage_type']) ?>)</li>
+                    <?php endforeach; ?>
+                    <?php if (count($urgentReports) > 3): ?>
+                        <li><em>Dan <?= count($urgentReports) - 3 ?> laporan urgent lainnya...</em></li>
+                    <?php endif; ?>
+                </ul>
+                <a href="/reports/export/damages/pdf" target="_blank" class="btn btn-sm btn-outline-light">
+                    <i class="fas fa-file-pdf me-1"></i>Cetak Laporan Lengkap
+                </a>
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<?php endif; ?>
 
 <!-- Filter Section -->
 <div class="card mb-4">
@@ -275,5 +322,151 @@ $this->section('content');
         </div>
     </div>
 </div>
+
+<!-- Export Information Card -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card border-info">
+            <div class="card-header bg-info text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-info-circle me-2"></i>Informasi Export
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-success">
+                            <i class="fas fa-file-csv me-2"></i>Export CSV
+                        </h6>
+                        <ul class="small mb-0">
+                            <li>Format data untuk analisis di Excel/Google Sheets</li>
+                            <li>Berisi semua field data lengkap</li>
+                            <li>Dapat di-filter dan di-sort sesuai kebutuhan</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-danger">
+                            <i class="fas fa-file-pdf me-2"></i>Export PDF
+                        </h6>
+                        <ul class="small mb-0">
+                            <li>Format laporan profesional siap print</li>
+                            <li>Dilengkapi header sekolah dan statistik</li>
+                            <li>Cocok untuk presentasi dan arsip resmi</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-3 p-2 bg-light rounded">
+                    <small class="text-muted">
+                        <i class="fas fa-lightbulb me-1"></i>
+                        <strong>Tip:</strong> Gunakan filter sebelum export untuk mendapatkan data yang lebih spesifik sesuai kebutuhan laporan Anda.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+
+        .btn-toolbar,
+        .sidebar,
+        .navbar,
+        .card:first-child,
+        .card:last-child,
+        .row:last-child {
+            display: none !important;
+        }
+
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        .main {
+            margin-left: 0 !important;
+        }
+    }
+
+    .alert-danger {
+        border-left: 4px solid #dc3545;
+    }
+
+    .dropdown-menu {
+        min-width: 180px;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        // Add loading state to export buttons
+        $('a[href*="/export/"]').click(function() {
+            var btn = $(this);
+            var originalText = btn.html();
+
+            if (btn.attr('href').includes('pdf')) {
+                btn.html('<i class="fas fa-spinner fa-spin me-2"></i>Generating PDF...');
+
+                // Show info message for PDF
+                setTimeout(function() {
+                    showNotification('PDF sedang dibuat, jendela baru akan terbuka...', 'info');
+                }, 500);
+            } else {
+                btn.html('<i class="fas fa-spinner fa-spin me-2"></i>Generating CSV...');
+            }
+
+            btn.addClass('disabled');
+
+            setTimeout(function() {
+                btn.html(originalText);
+                btn.removeClass('disabled');
+
+                if (!btn.attr('href').includes('pdf')) {
+                    showNotification('Export CSV berhasil!', 'success');
+                }
+            }, 2000);
+        });
+
+        // Auto-close urgent alert after 10 seconds
+        setTimeout(function() {
+            $('.alert-danger').fadeOut('slow');
+        }, 10000);
+
+        // Highlight urgent priority rows
+        $('tbody tr').each(function() {
+            var urgentBadge = $(this).find('.badge.bg-danger');
+            if (urgentBadge.length > 0 && urgentBadge.text().includes('Urgent')) {
+                $(this).addClass('table-warning');
+                $(this).find('td:first').prepend('<i class="fas fa-exclamation-triangle text-danger me-1" title="Prioritas Urgent"></i>');
+            }
+        });
+    });
+
+    function showNotification(message, type) {
+        var alertClass = 'alert-' + type;
+        var iconClass = type === 'success' ? 'fa-check-circle' : type === 'info' ? 'fa-info-circle' : 'fa-exclamation-circle';
+
+        var notification = `
+        <div class="alert ${alertClass} alert-dismissible fade show position-fixed" 
+             style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;" role="alert">
+            <i class="fas ${iconClass} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+
+        $('body').append(notification);
+
+        setTimeout(function() {
+            $('.alert').fadeOut('slow', function() {
+                $(this).remove();
+            });
+        }, 4000);
+    }
+</script>
 
 <?php $this->endSection(); ?>

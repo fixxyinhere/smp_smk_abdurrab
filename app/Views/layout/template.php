@@ -1166,6 +1166,7 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
+                        <!-- Dashboard - semua role bisa akses -->
                         <li class="nav-item">
                             <a class="nav-link <?= (current_url(true)->getPath() == '/dashboard') ? 'active' : '' ?>" href="/dashboard">
                                 <i class="fas fa-tachometer-alt"></i>
@@ -1173,7 +1174,8 @@
                             </a>
                         </li>
 
-                        <?php if (session()->get('role') !== 'user'): ?>
+                        <!-- Menu untuk role selain user dan kepsek -->
+                        <?php if (session()->get('role') !== 'user' && session()->get('role') !== 'kepsek'): ?>
                             <li class="nav-item">
                                 <a class="nav-link <?= (strpos(current_url(), '/items') !== false) ? 'active' : '' ?>" href="/items">
                                     <i class="fas fa-boxes"></i>
@@ -1182,6 +1184,7 @@
                             </li>
                         <?php endif; ?>
 
+                        <!-- Menu khusus admin -->
                         <?php if (session()->get('role') === 'admin'): ?>
                             <li class="nav-item">
                                 <a class="nav-link <?= (strpos(current_url(), '/categories') !== false) ? 'active' : '' ?>" href="/categories">
@@ -1197,27 +1200,55 @@
                             </li>
                         <?php endif; ?>
 
-                        <li class="nav-item">
-                            <a class="nav-link <?= (strpos(current_url(), '/requests') !== false) ? 'active' : '' ?>" href="/requests">
-                                <i class="fas fa-file-alt"></i>
-                                <?= session()->get('role') === 'user' ? 'Permintaan Saya' : 'Data Permintaan' ?>
-                            </a>
-                        </li>
+                        <!-- Menu untuk user saja -->
+                        <?php if (session()->get('role') === 'user'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link <?= (strpos(current_url(), '/requests') !== false) ? 'active' : '' ?>" href="/requests">
+                                    <i class="fas fa-file-alt"></i>
+                                    Permintaan Saya
+                                </a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link <?= (strpos(current_url(), '/loans') !== false) ? 'active' : '' ?>" href="/loans">
-                                <i class="fas fa-handshake"></i>
-                                <?= session()->get('role') === 'user' ? 'Pinjaman Saya' : 'Data Pinjaman' ?>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?= (strpos(current_url(), '/loans') !== false) ? 'active' : '' ?>" href="/loans">
+                                    <i class="fas fa-handshake"></i>
+                                    Pinjaman Saya
+                                </a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link <?= (strpos(current_url(), '/damage-reports') !== false) ? 'active' : '' ?>" href="/damage-reports">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                <?= session()->get('role') === 'user' ? 'Laporan Kerusakan' : 'Data Kerusakan' ?>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?= (strpos(current_url(), '/damage-reports') !== false) ? 'active' : '' ?>" href="/damage-reports">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Laporan Kerusakan
+                                </a>
+                            </li>
+                        <?php endif; ?>
 
+                        <!-- Menu untuk role selain user dan kepsek (admin, staff, dll) -->
+                        <?php if (session()->get('role') !== 'user' && session()->get('role') !== 'kepsek'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link <?= (strpos(current_url(), '/requests') !== false) ? 'active' : '' ?>" href="/requests">
+                                    <i class="fas fa-file-alt"></i>
+                                    Data Permintaan
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link <?= (strpos(current_url(), '/loans') !== false) ? 'active' : '' ?>" href="/loans">
+                                    <i class="fas fa-handshake"></i>
+                                    Data Pinjaman
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link <?= (strpos(current_url(), '/damage-reports') !== false) ? 'active' : '' ?>" href="/damage-reports">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Data Kerusakan
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
+                        <!-- Menu Laporan - untuk selain user (termasuk kepsek) -->
                         <?php if (session()->get('role') !== 'user'): ?>
                             <li class="nav-item">
                                 <a class="nav-link <?= (strpos(current_url(), '/reports') !== false) ? 'active' : '' ?>" href="/reports">
@@ -1779,3 +1810,74 @@
             }
         });
     </script>
+
+
+    <!-- JIKA INGIN KEPSEK MEMILIKI BANYAK MENU GUNAKAN SIDEBAR DIBAWAH INI (GANTI SIDEBAR DIATAS) -->
+
+    <!-- <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+        <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link <?= (current_url(true)->getPath() == '/dashboard') ? 'active' : '' ?>" href="/dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <?php if (session()->get('role') !== 'user'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= (strpos(current_url(), '/items') !== false) ? 'active' : '' ?>" href="/items">
+                            <i class="fas fa-boxes"></i>
+                            Data Barang
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <?php if (session()->get('role') === 'admin'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= (strpos(current_url(), '/categories') !== false) ? 'active' : '' ?>" href="/categories">
+                            <i class="fas fa-tags"></i>
+                            Kategori
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= (strpos(current_url(), '/users') !== false) ? 'active' : '' ?>" href="/users">
+                            <i class="fas fa-users"></i>
+                            Data Pengguna
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <li class="nav-item">
+                    <a class="nav-link <?= (strpos(current_url(), '/requests') !== false) ? 'active' : '' ?>" href="/requests">
+                        <i class="fas fa-file-alt"></i>
+                        <?= session()->get('role') === 'user' ? 'Permintaan Saya' : 'Data Permintaan' ?>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <?= (strpos(current_url(), '/loans') !== false) ? 'active' : '' ?>" href="/loans">
+                        <i class="fas fa-handshake"></i>
+                        <?= session()->get('role') === 'user' ? 'Pinjaman Saya' : 'Data Pinjaman' ?>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <?= (strpos(current_url(), '/damage-reports') !== false) ? 'active' : '' ?>" href="/damage-reports">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <?= session()->get('role') === 'user' ? 'Laporan Kerusakan' : 'Data Kerusakan' ?>
+                    </a>
+                </li>
+
+                <?php if (session()->get('role') !== 'user'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= (strpos(current_url(), '/reports') !== false) ? 'active' : '' ?>" href="/reports">
+                            <i class="fas fa-chart-bar"></i>
+                            Laporan
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </nav> -->
+    <!-- end sidebar opsional kepsek menu -->

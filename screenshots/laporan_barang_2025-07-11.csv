@@ -1,0 +1,6 @@
+Kode,"Nama Barang",Kategori,Jumlah,Kondisi,Lokasi,Harga,"Tanggal Beli"
+BRG0001,"Laptop Asus X441BA",Elektronik,2,baik,"Ruang TU",4500000.00,2023-01-15
+BRG0002,"Proyektor Epson EB-X41",Elektronik,3,baik,"Ruang Multimedia",3200000.00,2023-02-10
+BRG0003,"Meja Guru",Furniture,20,baik,"Ruang Kelas",750000.00,2023-01-20
+BRG0004,"Kursi Siswa",Furniture,100,baik,"Ruang Kelas",150000.00,2023-01-25
+BRG0005,"Bola Sepak",Olahraga,10,baik,"Gudang Olahraga",200000.00,2023-03-01

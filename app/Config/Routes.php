@@ -1,5 +1,5 @@
 <?php
-// File: app/Config/Routes.php (Add these routes)
+// File: app/Config/Routes.php (Versi tanpa filter - untuk testing sementara)
 use CodeIgniter\Router\RouteCollection;
 
 /**
@@ -55,7 +55,6 @@ $routes->group('requests', function ($routes) {
     $routes->get('/', 'Requests::index');
     $routes->get('create', 'Requests::create');
     $routes->post('store', 'Requests::store');
-    $routes->post('store', 'Requests::store');
     $routes->get('show/(:num)', 'Requests::show/$1');
     $routes->post('approve/(:num)', 'Requests::approve/$1');
     $routes->post('reject/(:num)', 'Requests::reject/$1');
@@ -73,7 +72,7 @@ $routes->group('loans', function ($routes) {
     $routes->get('delete/(:num)', 'Loans::delete/$1');
 });
 
-// Reports routes
+// Reports routes - DENGAN EXPORT PDF SUPPORT
 $routes->group('reports', function ($routes) {
     $routes->get('/', 'Reports::index');
     $routes->get('items', 'Reports::items');
@@ -81,7 +80,10 @@ $routes->group('reports', function ($routes) {
     $routes->get('loans', 'Reports::loans');
     $routes->get('damages', 'Reports::damages');
     $routes->get('users', 'Reports::users');
-    $routes->get('export/(:alpha)', 'Reports::export/$1');
+
+    // Export routes - support both CSV and PDF
+    $routes->get('export/(:segment)', 'Reports::export/$1');
+    $routes->get('export/(:segment)/(:segment)', 'Reports::export/$1/$2');
 });
 
 // Damage Reports routes
@@ -91,6 +93,9 @@ $routes->group('damage-reports', function ($routes) {
     $routes->post('store', 'DamageReports::store');
     $routes->get('show/(:num)', 'DamageReports::show/$1');
     $routes->post('verify/(:num)', 'DamageReports::verify/$1');
+    $routes->post('approve/(:num)', 'DamageReports::approve/$1');
+    $routes->post('reject/(:num)', 'DamageReports::reject/$1');
+    $routes->post('resolve/(:num)', 'DamageReports::resolve/$1');
     $routes->get('delete/(:num)', 'DamageReports::delete/$1');
 });
 
@@ -98,4 +103,6 @@ $routes->group('damage-reports', function ($routes) {
 $routes->group('api', function ($routes) {
     $routes->get('users', 'Api::getUsers');
     $routes->get('items/available', 'Api::getAvailableItems');
+    $routes->get('dashboard/stats', 'Api::getDashboardStats');
+    $routes->get('reports/quick-stats', 'Api::getQuickStats');
 });
