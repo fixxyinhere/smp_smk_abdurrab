@@ -1,5 +1,5 @@
 <?php
-// File: app/Models/RequestModel.php
+// File: app/Models/RequestModel.php (FIXED VERSION)
 namespace App\Models;
 
 use CodeIgniter\Model;
@@ -24,29 +24,49 @@ class RequestModel extends Model
 
     public function getAllRequests()
     {
-        return $this->select('requests.*, users.full_name as user_name, approver.full_name as approver_name')
+        $requests = $this->select('requests.*, users.full_name as user_name, users.phone as user_phone, approver.full_name as approver_name')
             ->join('users', 'users.id = requests.user_id', 'left')
             ->join('users as approver', 'approver.id = requests.approved_by', 'left')
             ->orderBy('requests.created_at', 'DESC')
             ->findAll();
+
+        // Add is_loaned flag manually
+        foreach ($requests as &$request) {
+            $request['is_loaned'] = $this->isRequestLoaned($request['id']);
+        }
+
+        return $requests;
     }
 
     public function getRequestsByUser($userId)
     {
-        return $this->select('requests.*, users.full_name as user_name, approver.full_name as approver_name')
+        $requests = $this->select('requests.*, users.full_name as user_name, users.phone as user_phone, approver.full_name as approver_name')
             ->join('users', 'users.id = requests.user_id', 'left')
             ->join('users as approver', 'approver.id = requests.approved_by', 'left')
             ->where('requests.user_id', $userId)
             ->orderBy('requests.created_at', 'DESC')
             ->findAll();
+
+        // Add is_loaned flag manually
+        foreach ($requests as &$request) {
+            $request['is_loaned'] = $this->isRequestLoaned($request['id']);
+        }
+
+        return $requests;
     }
 
     public function getRequestWithItems($id)
     {
-        return $this->select('requests.*, users.full_name as user_name, approver.full_name as approver_name')
+        $request = $this->select('requests.*, users.full_name as user_name, users.phone as user_phone, approver.full_name as approver_name')
             ->join('users', 'users.id = requests.user_id', 'left')
             ->join('users as approver', 'approver.id = requests.approved_by', 'left')
             ->find($id);
+
+        if ($request) {
+            $request['is_loaned'] = $this->isRequestLoaned($request['id']);
+        }
+
+        return $request;
     }
 
     public function generateRequestNumber()
@@ -89,5 +109,38 @@ class RequestModel extends Model
             'rejected' => $this->where('status', 'rejected')->countAllResults(),
             'total' => $this->countAllResults()
         ];
+    }
+
+    // Method untuk mengecek apakah request sudah dijadikan pinjaman
+    public function isRequestLoaned($requestId)
+    {
+        $db = \Config\Database::connect();
+        $result = $db->table('loans')
+            ->where('request_id', $requestId)
+            ->countAllResults();
+
+        return $result > 0;
+    }
+
+    // Method untuk mendapatkan approved requests yang belum dijadikan pinjaman
+    public function getApprovedRequestsNotLoaned()
+    {
+        $db = \Config\Database::connect();
+
+        // Get all approved requests
+        $approvedRequests = $this->select('requests.*, users.full_name as user_name, users.phone as user_phone')
+            ->join('users', 'users.id = requests.user_id', 'left')
+            ->where('requests.status', 'approved')
+            ->findAll();
+
+        // Filter out those that already have loans
+        $notLoanedRequests = [];
+        foreach ($approvedRequests as $request) {
+            if (!$this->isRequestLoaned($request['id'])) {
+                $notLoanedRequests[] = $request;
+            }
+        }
+
+        return $notLoanedRequests;
     }
 }

@@ -23,8 +23,19 @@ $this->section('content');
 
                         <div class="alert alert-info">
                             <h6><i class="fas fa-info-circle me-2"></i>Pinjaman dari Permintaan</h6>
-                            <p class="mb-0">Nomor Permintaan: <strong><?= $request['request_number'] ?></strong></p>
-                            <p class="mb-0">Pemohon: <strong><?= $request['user_name'] ?></strong></p>
+                            <p class="mb-1">Nomor Permintaan: <strong><?= $request['request_number'] ?></strong></p>
+                            <p class="mb-1">Pemohon: <strong><?= $request['user_name'] ?></strong></p>
+                            <?php if (!empty($request['user_phone'])): ?>
+                                <p class="mb-0">
+                                    No. HP:
+                                    <a href="tel:<?= formatPhoneNumber($request['user_phone']) ?>" class="text-decoration-none">
+                                        <i class="fas fa-phone-alt text-success me-1"></i><?= $request['user_phone'] ?>
+                                    </a>
+                                    <a href="https://wa.me/<?= formatWhatsAppNumber($request['user_phone']) ?>" class="btn btn-sm btn-success ms-2" target="_blank" title="Chat WhatsApp">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                </p>
+                            <?php endif; ?>
                         </div>
                     <?php endif; ?>
 
@@ -56,12 +67,25 @@ $this->section('content');
                                 <option value="">Pilih Peminjam</option>
                                 <?php if (isset($users)): ?>
                                     <?php foreach ($users as $user): ?>
-                                        <option value="<?= $user['id'] ?>">
+                                        <option value="<?= $user['id'] ?>" data-phone="<?= $user['phone'] ?? '' ?>">
                                             <?= $user['full_name'] ?> (<?= $user['username'] ?>)
+                                            <?php if (!empty($user['phone'])): ?>
+                                                - <?= $user['phone'] ?>
+                                            <?php endif; ?>
                                         </option>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </select>
+                            <div id="userPhoneInfo" class="mt-2" style="display: none;">
+                                <small class="text-muted">No. HP: </small>
+                                <span id="phoneNumber"></span>
+                                <a id="phoneLink" href="" class="btn btn-sm btn-outline-success ms-2" style="display: none;">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                                <a id="waLink" href="" class="btn btn-sm btn-outline-success" target="_blank" style="display: none;">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </div>
                         </div>
                     <?php else: ?>
                         <input type="hidden" name="user_id" value="<?= $request['user_id'] ?>">
@@ -176,7 +200,22 @@ $this->section('content');
         // Set minimum return date (tomorrow)
         $('#return_date').attr('min', new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
 
-        <?php if (!isset($request_items)): ?>
+        <?php if (!isset($request)): ?>
+            // Show user phone info when user is selected
+            $('#user_id').change(function() {
+                const selectedOption = $(this).find(':selected');
+                const phone = selectedOption.data('phone');
+
+                if (phone) {
+                    $('#phoneNumber').text(phone);
+                    $('#phoneLink').attr('href', 'tel:' + phone).show();
+                    $('#waLink').attr('href', 'https://wa.me/' + phone.replace(/[^0-9]/g, '')).show();
+                    $('#userPhoneInfo').show();
+                } else {
+                    $('#userPhoneInfo').hide();
+                }
+            });
+
             // Add new item row
             $('#addItem').click(function() {
                 const newRow = $('.item-row:first').clone();

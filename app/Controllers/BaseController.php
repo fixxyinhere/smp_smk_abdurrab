@@ -28,6 +28,8 @@ abstract class BaseController extends Controller
      */
     protected $request;
 
+
+
     /**
      * An array of helpers to be loaded automatically upon
      * class instantiation. These helpers will be available
@@ -35,7 +37,7 @@ abstract class BaseController extends Controller
      *
      * @var list<string>
      */
-    protected $helpers = ['form', 'url', 'validation'];
+    protected $helpers = ['form', 'url', 'validation', 'phone'];
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -49,6 +51,7 @@ abstract class BaseController extends Controller
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
+        
 
         // Load custom helper
         helper('validation');

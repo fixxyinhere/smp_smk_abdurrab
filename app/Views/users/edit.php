@@ -42,9 +42,9 @@ $this->section('content');
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password Baru</label>
-                                <input type="password" class="form-control" id="password" name="password">
-                                <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah password</small>
+                                <label for="phone" class="form-label">Nomor HP <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="phone" name="phone" value="<?= $user['phone'] ?? '' ?>" placeholder="081234567890" required>
+                                <small class="form-text text-muted">Format: 081234567890 (tanpa tanda +62)</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -60,12 +60,23 @@ $this->section('content');
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                        <select class="form-select" id="status" name="status" required>
-                            <option value="active" <?= $user['status'] == 'active' ? 'selected' : '' ?>>Aktif</option>
-                            <option value="inactive" <?= $user['status'] == 'inactive' ? 'selected' : '' ?>>Tidak Aktif</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password Baru</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                                <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah password</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="active" <?= $user['status'] == 'active' ? 'selected' : '' ?>>Aktif</option>
+                                    <option value="inactive" <?= $user['status'] == 'inactive' ? 'selected' : '' ?>>Tidak Aktif</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -80,4 +91,41 @@ $this->section('content');
     </div>
 </div>
 
+<?php $this->endSection(); ?>
+
+<?php $this->section('scripts'); ?>
+<script>
+    $(document).ready(function() {
+        // Phone number formatting
+        $('#phone').on('input', function() {
+            let value = $(this).val().replace(/\D/g, ''); // Remove non-digits
+
+            // Ensure it starts with 08 if user types 8
+            if (value.length > 0 && value.charAt(0) === '8') {
+                value = '0' + value;
+            }
+
+            $(this).val(value);
+        });
+
+        // Validate phone number on form submit
+        $('form').submit(function(e) {
+            const phone = $('#phone').val();
+
+            if (phone.length < 10 || phone.length > 15) {
+                e.preventDefault();
+                alert('Nomor HP harus antara 10-15 digit');
+                $('#phone').focus();
+                return false;
+            }
+
+            if (!phone.match(/^0[8-9][0-9]+$/)) {
+                e.preventDefault();
+                alert('Nomor HP harus dimulai dengan 08 atau 09');
+                $('#phone').focus();
+                return false;
+            }
+        });
+    });
+</script>
 <?php $this->endSection(); ?>

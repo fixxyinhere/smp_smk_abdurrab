@@ -24,6 +24,7 @@ $this->section('content');
                         <th>No. Pinjaman</th>
                         <?php if ($role !== 'user'): ?>
                             <th>Peminjam</th>
+                            <th>No. HP</th>
                         <?php endif; ?>
                         <th>No. Permintaan</th>
                         <th>Tanggal Pinjam</th>
@@ -39,6 +40,15 @@ $this->section('content');
                             <td><?= $loan['loan_number'] ?></td>
                             <?php if ($role !== 'user'): ?>
                                 <td><?= $loan['user_name'] ?></td>
+                                <td>
+                                    <?php if (!empty($loan['user_phone'])): ?>
+                                        <a href="tel:<?= formatPhoneNumber($loan['user_phone']) ?>" class="text-decoration-none">
+                                            <i class="fas fa-phone-alt text-success me-1"></i><?= $loan['user_phone'] ?>
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="text-muted">-</span>
+                                    <?php endif; ?>
+                                </td>
                             <?php endif; ?>
                             <td><?= $loan['request_number'] ?: '-' ?></td>
                             <td><?= date('d/m/Y', strtotime($loan['loan_date'])) ?></td>
@@ -59,17 +69,22 @@ $this->section('content');
                             </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="/loans/show/<?= $loan['id'] ?>" class="btn btn-sm btn-outline-info">
+                                    <a href="/loans/show/<?= $loan['id'] ?>" class="btn btn-sm btn-outline-info" title="Lihat Detail">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <?php if ($loan['status'] === 'active' && $role !== 'user'): ?>
-                                        <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#returnModal<?= $loan['id'] ?>">
-                                            <i class="fas fa-undo"></i> Kembalikan
+                                        <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#returnModal<?= $loan['id'] ?>" title="Kembalikan">
+                                            <i class="fas fa-undo"></i>
                                         </button>
                                     <?php endif; ?>
                                     <?php if ($loan['status'] === 'returned' && $role !== 'user'): ?>
-                                        <a href="/loans/delete/<?= $loan['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete">
+                                        <a href="/loans/delete/<?= $loan['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete" title="Hapus">
                                             <i class="fas fa-trash"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($loan['user_phone']) && $role !== 'user'): ?>
+                                        <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $loan['user_phone']) ?>" class="btn btn-sm btn-outline-success" target="_blank" title="Chat WhatsApp">
+                                            <i class="fab fa-whatsapp"></i>
                                         </a>
                                     <?php endif; ?>
                                 </div>

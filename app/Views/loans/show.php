@@ -40,6 +40,19 @@ $this->section('content');
                         <td><strong>Peminjam</strong></td>
                         <td>: <?= $loan['user_name'] ?></td>
                     </tr>
+                    <?php if (!empty($loan['user_phone']) && $role !== 'user'): ?>
+                        <tr>
+                            <td><strong>No. HP Peminjam</strong></td>
+                            <td>:
+                                <a href="tel:<?= formatPhoneNumber($loan['user_phone']) ?>" class="text-decoration-none">
+                                    <i class="fas fa-phone-alt text-success me-1"></i><?= $loan['user_phone'] ?>
+                                </a>
+                                <a href="https://wa.me/<?= formatWhatsAppNumber($loan['user_phone']) ?>" class="btn btn-sm btn-success ms-2" target="_blank" title="Chat WhatsApp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                     <tr>
                         <td><strong>Tanggal Pinjam</strong></td>
                         <td>: <?= date('d/m/Y', strtotime($loan['loan_date'])) ?></td>
@@ -119,6 +132,16 @@ $this->section('content');
                     <div class="alert alert-danger mb-0">
                         <h6><i class="fas fa-exclamation-triangle me-2"></i>Peringatan!</h6>
                         <p class="mb-0">Pinjaman ini sudah melewati batas waktu pengembalian.</p>
+                        <?php if (!empty($loan['user_phone'])): ?>
+                            <div class="mt-2">
+                                <a href="tel:<?= $loan['user_phone'] ?>" class="btn btn-sm btn-outline-light me-2">
+                                    <i class="fas fa-phone"></i> Telepon
+                                </a>
+                                <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $loan['user_phone']) ?>?text=Halo%20<?= urlencode($loan['user_name']) ?>,%20pinjaman%20Anda%20dengan%20nomor%20<?= $loan['loan_number'] ?>%20sudah%20melewati%20batas%20waktu.%20Mohon%20segera%20mengembalikan." class="btn btn-sm btn-outline-light" target="_blank">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

@@ -23,6 +23,7 @@ $this->section('content');
                         <th>Username</th>
                         <th>Nama Lengkap</th>
                         <th>Email</th>
+                        <th>No. HP</th>
                         <th>Role</th>
                         <th>Status</th>
                         <th>Tanggal Dibuat</th>
@@ -37,6 +38,15 @@ $this->section('content');
                             <td><?= $user['username'] ?></td>
                             <td><?= $user['full_name'] ?></td>
                             <td><?= $user['email'] ?></td>
+                            <td>
+                                <?php if (!empty($user['phone'])): ?>
+                                    <a href="tel:<?= formatPhoneNumber($user['phone']) ?>" class="text-decoration-none">
+                                        <i class="fas fa-phone-alt text-success me-1"></i><?= $user['phone'] ?>
+                                    </a>
+                                <?php else: ?>
+                                    <span class="text-muted">-</span>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <?php if ($user['role'] === 'admin'): ?>
                                     <span class="badge bg-danger">Admin</span>
@@ -56,12 +66,17 @@ $this->section('content');
                             <td><?= date('d/m/Y', strtotime($user['created_at'])) ?></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="/users/edit/<?= $user['id'] ?>" class="btn btn-sm btn-outline-warning">
+                                    <a href="/users/edit/<?= $user['id'] ?>" class="btn btn-sm btn-outline-warning" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <?php if ($user['id'] != session()->get('user_id')): ?>
-                                        <a href="/users/delete/<?= $user['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete">
+                                        <a href="/users/delete/<?= $user['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete" title="Hapus">
                                             <i class="fas fa-trash"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($user['phone'])): ?>
+                                        <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $user['phone']) ?>" class="btn btn-sm btn-outline-success" target="_blank" title="Chat WhatsApp">
+                                            <i class="fab fa-whatsapp"></i>
                                         </a>
                                     <?php endif; ?>
                                 </div>

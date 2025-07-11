@@ -62,14 +62,20 @@ class Loans extends BaseController
             'title' => 'Buat Pinjaman',
             'loan_number' => $this->loanModel->generateLoanNumber(),
             'items' => $this->itemModel->getAvailableItems(),
-            'users' => $this->userModel->where('role', 'user')->where('status', 'active')->findAll() // Add this line
+            'users' => $this->userModel->select('id, full_name, phone')->where('role', 'user')->where('status', 'active')->findAll()
         ];
 
         if ($requestId) {
             $request = $this->requestModel->find($requestId);
             if ($request && $request['status'] === 'approved') {
-                $data['request'] = $this->requestModel->getRequestWithItems($requestId);
-                $data['request_items'] = $this->requestItemModel->getRequestItems($requestId);
+                // Check if request already has a loan
+                if (!$this->requestModel->isRequestLoaned($requestId)) {
+                    $data['request'] = $this->requestModel->getRequestWithItems($requestId);
+                    $data['request_items'] = $this->requestItemModel->getRequestItems($requestId);
+                } else {
+                    session()->setFlashdata('error', 'Permintaan ini sudah dijadikan pinjaman');
+                    return redirect()->to('/loans');
+                }
             }
         }
 
@@ -94,6 +100,13 @@ class Loans extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        // Check if request_id is provided and if it's already loaned
+        $requestId = $this->request->getPost('request_id');
+        if ($requestId && $this->requestModel->isRequestLoaned($requestId)) {
+            session()->setFlashdata('error', 'Permintaan ini sudah dijadikan pinjaman sebelumnya');
+            return redirect()->back()->withInput();
+        }
+
         $db = \Config\Database::connect();
         $db->transStart();
 
@@ -101,7 +114,7 @@ class Loans extends BaseController
             // Insert loan
             $loanData = [
                 'loan_number' => $this->loanModel->generateLoanNumber(),
-                'request_id' => $this->request->getPost('request_id') ?: null,
+                'request_id' => $requestId ?: null,
                 'user_id' => $this->request->getPost('user_id'),
                 'loan_date' => $this->request->getPost('loan_date'),
                 'return_date' => $this->request->getPost('return_date'),

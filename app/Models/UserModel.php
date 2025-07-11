@@ -8,7 +8,7 @@ class UserModel extends Model
 {
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['username', 'password', 'full_name', 'email', 'role', 'status'];
+    protected $allowedFields = ['username', 'password', 'full_name', 'email', 'phone', 'role', 'status'];
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
@@ -40,5 +40,19 @@ class UserModel extends Model
     public function updateUserStatus($id, $status)
     {
         return $this->update($id, ['status' => $status]);
+    }
+
+    // Method untuk mendapatkan user dengan informasi lengkap termasuk phone
+    public function getUserWithPhone($id)
+    {
+        return $this->select('id, username, full_name, email, phone, role, status')->find($id);
+    }
+
+    // Method untuk mendapatkan semua user aktif dengan phone
+    public function getActiveUsersWithPhone()
+    {
+        return $this->select('id, username, full_name, email, phone, role')
+            ->where('status', 'active')
+            ->findAll();
     }
 }

@@ -16,6 +16,14 @@ $this->section('content');
                     <i class="fas fa-times me-2"></i>Tolak
                 </button>
             <?php endif; ?>
+            <?php
+            // Only show "Pinjamkan" button if request is approved AND not yet loaned
+            if ($request['status'] === 'approved' && $role !== 'user' && (!isset($request['is_loaned']) || !$request['is_loaned'])):
+            ?>
+                <a href="/loans/create/<?= $request['id'] ?>" class="btn btn-primary">
+                    <i class="fas fa-handshake me-2"></i>Buat Pinjaman
+                </a>
+            <?php endif; ?>
             <a href="/requests" class="btn btn-secondary">
                 <i class="fas fa-arrow-left me-2"></i>Kembali
             </a>
@@ -39,6 +47,19 @@ $this->section('content');
                         <td><strong>Pemohon</strong></td>
                         <td>: <?= $request['user_name'] ?></td>
                     </tr>
+                    <?php if (!empty($request['user_phone']) && $role !== 'user'): ?>
+                        <tr>
+                            <td><strong>No. HP Pemohon</strong></td>
+                            <td>:
+                                <a href="tel:<?= formatPhoneNumber($request['user_phone']) ?>" class="text-decoration-none">
+                                    <i class="fas fa-phone-alt text-success me-1"></i><?= $request['user_phone'] ?>
+                                </a>
+                                <a href="https://wa.me/<?= formatWhatsAppNumber($request['user_phone']) ?>" class="btn btn-sm btn-success ms-2" target="_blank" title="Chat WhatsApp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                     <tr>
                         <td><strong>Tanggal Permintaan</strong></td>
                         <td>: <?= date('d/m/Y', strtotime($request['request_date'])) ?></td>
@@ -54,6 +75,9 @@ $this->section('content');
                                 <span class="badge bg-warning">Pending</span>
                             <?php elseif ($request['status'] === 'approved'): ?>
                                 <span class="badge bg-success">Disetujui</span>
+                                <?php if (isset($request['is_loaned']) && $request['is_loaned']): ?>
+                                    <span class="badge bg-info ms-1">Sudah Dipinjamkan</span>
+                                <?php endif; ?>
                             <?php else: ?>
                                 <span class="badge bg-danger">Ditolak</span>
                             <?php endif; ?>
@@ -102,6 +126,16 @@ $this->section('content');
                                 <h6><?= $request['status'] === 'approved' ? 'Disetujui' : 'Ditolak' ?></h6>
                                 <p class="text-muted"><?= date('d/m/Y H:i', strtotime($request['approved_at'])) ?></p>
                                 <small>oleh <?= $request['approver_name'] ?></small>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($request['is_loaned']) && $request['is_loaned']): ?>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-info"></div>
+                            <div class="timeline-content">
+                                <h6>Sudah Dipinjamkan</h6>
+                                <p class="text-muted">Permintaan telah dijadikan pinjaman</p>
                             </div>
                         </div>
                     <?php endif; ?>

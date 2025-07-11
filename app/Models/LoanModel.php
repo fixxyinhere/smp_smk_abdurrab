@@ -1,5 +1,5 @@
 <?php
-// File: app/Models/LoanModel.php
+// File: app/Models/LoanModel.php (FIXED getLoanStats method)
 namespace App\Models;
 
 use CodeIgniter\Model;
@@ -24,7 +24,7 @@ class LoanModel extends Model
 
     public function getAllLoans()
     {
-        return $this->select('loans.*, users.full_name as user_name, requests.request_number')
+        return $this->select('loans.*, users.full_name as user_name, users.phone as user_phone, requests.request_number')
             ->join('users', 'users.id = loans.user_id', 'left')
             ->join('requests', 'requests.id = loans.request_id', 'left')
             ->orderBy('loans.created_at', 'DESC')
@@ -33,7 +33,7 @@ class LoanModel extends Model
 
     public function getLoansByUser($userId)
     {
-        return $this->select('loans.*, users.full_name as user_name, requests.request_number')
+        return $this->select('loans.*, users.full_name as user_name, users.phone as user_phone, requests.request_number')
             ->join('users', 'users.id = loans.user_id', 'left')
             ->join('requests', 'requests.id = loans.request_id', 'left')
             ->where('loans.user_id', $userId)
@@ -43,7 +43,7 @@ class LoanModel extends Model
 
     public function getLoanWithItems($id)
     {
-        return $this->select('loans.*, users.full_name as user_name, requests.request_number')
+        return $this->select('loans.*, users.full_name as user_name, users.phone as user_phone, requests.request_number')
             ->join('users', 'users.id = loans.user_id', 'left')
             ->join('requests', 'requests.id = loans.request_id', 'left')
             ->find($id);
@@ -71,17 +71,20 @@ class LoanModel extends Model
 
     public function getOverdueLoans()
     {
-        return $this->where('return_date <', date('Y-m-d'))
-            ->where('status', 'active')
+        return $this->select('loans.*, users.full_name as user_name, users.phone as user_phone')
+            ->join('users', 'users.id = loans.user_id', 'left')
+            ->where('loans.return_date <', date('Y-m-d'))
+            ->where('loans.status', 'active')
             ->findAll();
     }
 
+    // FIXED METHOD - Specify table name for status column
     public function getLoanStats()
     {
         return [
-            'active' => $this->where('status', 'active')->countAllResults(),
-            'returned' => $this->where('status', 'returned')->countAllResults(),
-            'overdue' => $this->where('return_date <', date('Y-m-d'))->where('status', 'active')->countAllResults(),
+            'active' => $this->where('loans.status', 'active')->countAllResults(),
+            'returned' => $this->where('loans.status', 'returned')->countAllResults(),
+            'overdue' => $this->where('loans.return_date <', date('Y-m-d'))->where('loans.status', 'active')->countAllResults(),
             'total' => $this->countAllResults()
         ];
     }

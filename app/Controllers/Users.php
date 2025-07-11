@@ -51,6 +51,7 @@ class Users extends BaseController
             'password' => 'required|min_length[6]',
             'full_name' => 'required|min_length[3]',
             'email' => 'required|valid_email|is_unique[users.email]',
+            'phone' => 'required|min_length[10]|max_length[15]',
             'role' => 'required|in_list[admin,kepsek,user]'
         ];
 
@@ -63,6 +64,7 @@ class Users extends BaseController
             'password' => $this->request->getPost('password'),
             'full_name' => $this->request->getPost('full_name'),
             'email' => $this->request->getPost('email'),
+            'phone' => $this->request->getPost('phone'),
             'role' => $this->request->getPost('role'),
             'status' => 'active'
         ];
@@ -109,6 +111,7 @@ class Users extends BaseController
         $rules = [
             'full_name' => 'required|min_length[3]',
             'email' => 'required|valid_email',
+            'phone' => 'required|min_length[10]|max_length[15]',
             'role' => 'required|in_list[admin,kepsek,user]',
             'status' => 'required|in_list[active,inactive]'
         ];
@@ -125,6 +128,7 @@ class Users extends BaseController
         $data = [
             'full_name' => $this->request->getPost('full_name'),
             'email' => $this->request->getPost('email'),
+            'phone' => $this->request->getPost('phone'),
             'role' => $this->request->getPost('role'),
             'status' => $this->request->getPost('status')
         ];

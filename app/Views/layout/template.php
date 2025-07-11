@@ -1116,6 +1116,18 @@
                 }
             }
         }
+
+        .navbar-logo {
+            height: 40px !important;
+            width: auto !important;
+            max-width: 50px !important;
+            object-fit: contain !important;
+            border: 2px solid red !important;
+            /* Temporary border untuk debug */
+            background-color: white !important;
+            /* Temporary background untuk debug */
+            display: inline-block !important;
+        }
     </style>
 </head>
 
@@ -1123,7 +1135,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0" href="/dashboard">
-            <i class="fas fa-school me-2"></i>
+            <img src="<?= base_url('assets/images/logo.png') ?>" alt="SMP SMK Abdurrab" class="navbar-logo me-2" style="height: 35px; width: auto;">
             SMP SMK Abdurrab
         </a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
