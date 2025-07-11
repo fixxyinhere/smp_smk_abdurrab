@@ -18,13 +18,13 @@ $this->section('content');
         <div class="card">
             <div class="card-body">
                 <!-- Debug Info -->
-                <div class="alert alert-info">
+                <!-- <div class="alert alert-info">
                     <small>
                         Debug: Request Number = <?= $request_number ?> |
                         Available Items = <?= count($items) ?> |
                         User ID = <?= session()->get('user_id') ?>
                     </small>
-                </div>
+                </div> -->
 
                 <form action="<?= base_url('requests/store') ?>" method="post" id="requestForm">
                     <div class="row">
