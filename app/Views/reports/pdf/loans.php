@@ -10,7 +10,7 @@
     <title><?= $title ?></title>
     <style>
         @page {
-            margin: 1cm;
+            margin: 2cm 1.5cm;
             size: A4;
         }
 
@@ -22,153 +22,140 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            font-size: 12px;
-            line-height: 1.4;
-            color: #333;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #2d3748;
             background: white;
         }
 
         .header {
             text-align: center;
-            border-bottom: 3px solid #ea580c;
+            border-bottom: 2px solid #2d3748;
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
 
         .school-info h1 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
-            color: #1e293b;
-            margin-bottom: 5px;
+            color: #1a202c;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         .school-info h2 {
             font-size: 16px;
-            color: #475569;
-            margin-bottom: 5px;
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
 
         .school-info p {
             font-size: 11px;
-            color: #64748b;
+            color: #718096;
+            line-height: 1.4;
         }
 
         .report-title {
-            background: linear-gradient(135deg, #ea580c, #f97316);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #2d3748;
+            padding: 20px;
+            margin: 30px 0;
             text-align: center;
         }
 
         .report-title h3 {
             font-size: 18px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 600;
         }
 
         .report-title p {
             font-size: 12px;
-            opacity: 0.9;
+            color: #4a5568;
         }
 
         .meta-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
-            font-size: 11px;
-            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 10px;
+            color: #718096;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+
+        .stats-section {
+            margin-bottom: 30px;
+        }
+
+        .stats-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 15px;
-            margin-bottom: 30px;
         }
 
         .stat-card {
-            background: #f8fafc;
+            background: #f7fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
             padding: 15px;
             text-align: center;
-        }
-
-        .stat-card.primary {
-            border-left: 4px solid #2563eb;
-        }
-
-        .stat-card.warning {
-            border-left: 4px solid #ea580c;
-        }
-
-        .stat-card.success {
-            border-left: 4px solid #16a34a;
-        }
-
-        .stat-card.danger {
-            border-left: 4px solid #dc2626;
         }
 
         .stat-number {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 5px;
-        }
-
-        .stat-card.primary .stat-number {
-            color: #2563eb;
-        }
-
-        .stat-card.warning .stat-number {
-            color: #ea580c;
-        }
-
-        .stat-card.success .stat-number {
-            color: #16a34a;
-        }
-
-        .stat-card.danger .stat-number {
-            color: #dc2626;
+            color: #2d3748;
         }
 
         .stat-label {
             font-size: 11px;
-            color: #64748b;
+            color: #718096;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .overdue-section {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-left: 4px solid #dc2626;
-            border-radius: 8px;
+            background: #fffbf0;
+            border: 1px solid #fed7d7;
+            border-left: 3px solid #e53e3e;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .overdue-title {
-            color: #dc2626;
+            color: #c53030;
             font-weight: bold;
             margin-bottom: 10px;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .table-container {
             background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 25px;
         }
 
         .table-header {
-            background: #1e293b;
+            background: #2d3748;
             color: white;
-            padding: 12px 15px;
-            font-weight: bold;
+            padding: 15px;
+            font-weight: 600;
             font-size: 14px;
+            text-align: center;
         }
 
         table {
@@ -178,90 +165,83 @@
         }
 
         th {
-            background: #f1f5f9;
-            color: #1e293b;
-            padding: 10px 6px;
+            background: #f7fafc;
+            color: #2d3748;
+            padding: 12px 8px;
             text-align: left;
-            font-weight: bold;
+            font-weight: 600;
             border-bottom: 2px solid #e2e8f0;
-            font-size: 9px;
+            font-size: 10px;
         }
 
         td {
-            padding: 8px 6px;
+            padding: 10px 8px;
             border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
-            font-size: 9px;
+            font-size: 10px;
         }
 
         tr:nth-child(even) {
-            background: #f8fafc;
+            background: #f7fafc;
         }
 
         tr.overdue {
-            background: #fef2f2 !important;
+            background: #fffbf0 !important;
         }
 
         .badge {
             display: inline-block;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 8px;
-            font-weight: bold;
+            padding: 4px 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 9px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            background: white;
         }
 
-        .badge.primary {
-            background: #dbeafe;
-            color: #1e40af;
-            border: 1px solid #bfdbfe;
+        .badge.active {
+            border-color: #3182ce;
+            color: #2c5282;
         }
 
-        .badge.success {
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #bbf7d0;
+        .badge.returned {
+            border-color: #38a169;
+            color: #2f855a;
         }
 
-        .badge.danger {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        .badge.warning {
-            background: #fef3c7;
-            color: #92400e;
-            border: 1px solid #fde68a;
+        .badge.overdue {
+            border-color: #e53e3e;
+            color: #c53030;
         }
 
         .summary-info {
-            background: #f8fafc;
+            background: #f7fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 12px;
-            margin-top: 20px;
+            padding: 15px;
+            margin-top: 25px;
             font-size: 11px;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            padding: 4px 0;
         }
 
         .summary-row:last-child {
             margin-bottom: 0;
-            font-weight: bold;
-            border-top: 1px solid #d1d5db;
-            padding-top: 5px;
+            font-weight: 600;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 10px;
+            margin-top: 10px;
         }
 
         .footer {
             margin-top: 40px;
             border-top: 2px solid #e2e8f0;
-            padding-top: 20px;
+            padding-top: 25px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
@@ -269,19 +249,41 @@
 
         .signature-section {
             text-align: center;
-            min-width: 200px;
+            min-width: 180px;
+            font-size: 11px;
         }
 
         .signature-line {
-            border-top: 1px solid #64748b;
-            margin-top: 60px;
+            border-top: 1px solid #718096;
+            margin-top: 50px;
             padding-top: 5px;
-            font-size: 11px;
-            color: #64748b;
+            color: #718096;
         }
 
         .text-center {
             text-align: center;
+        }
+
+        .notes {
+            font-size: 10px;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        /* Print optimizations */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .table-container {
+                break-inside: avoid;
+            }
+
+            tr {
+                break-inside: avoid;
+            }
         }
     </style>
 </head>
@@ -310,32 +312,35 @@
     </div>
 
     <!-- Statistics -->
-    <div class="stats-grid">
-        <div class="stat-card primary">
-            <div class="stat-number"><?= $stats['total'] ?></div>
-            <div class="stat-label">Total Pinjaman</div>
-        </div>
-        <div class="stat-card warning">
-            <div class="stat-number"><?= $stats['active'] ?></div>
-            <div class="stat-label">Aktif</div>
-        </div>
-        <div class="stat-card success">
-            <div class="stat-number"><?= $stats['returned'] ?></div>
-            <div class="stat-label">Dikembalikan</div>
-        </div>
-        <div class="stat-card danger">
-            <div class="stat-number">
-                <?php
-                $overdueCount = 0;
-                foreach ($loans as $loan) {
-                    if ($loan['status'] === 'active' && $loan['return_date'] < date('Y-m-d')) {
-                        $overdueCount++;
-                    }
-                }
-                echo $overdueCount;
-                ?>
+    <div class="stats-section">
+        <div class="stats-title">RINGKASAN STATISTIK</div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['total'] ?></div>
+                <div class="stat-label">Total Pinjaman</div>
             </div>
-            <div class="stat-label">Terlambat</div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['active'] ?></div>
+                <div class="stat-label">Aktif</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['returned'] ?></div>
+                <div class="stat-label">Dikembalikan</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">
+                    <?php
+                    $overdueCount = 0;
+                    foreach ($loans as $loan) {
+                        if ($loan['status'] === 'active' && $loan['return_date'] < date('Y-m-d')) {
+                            $overdueCount++;
+                        }
+                    }
+                    echo $overdueCount;
+                    ?>
+                </div>
+                <div class="stat-label">Terlambat</div>
+            </div>
         </div>
     </div>
 
@@ -347,7 +352,7 @@
     ?>
     <?php if (!empty($overdueLoans)): ?>
         <div class="overdue-section">
-            <div class="overdue-title">⚠️ PINJAMAN TERLAMBAT</div>
+            <div class="overdue-title">PINJAMAN TERLAMBAT</div>
             <div style="font-size: 10px;">
                 <?php foreach (array_slice($overdueLoans, 0, 5) as $overdue): ?>
                     <?php
@@ -361,7 +366,7 @@
                     </div>
                 <?php endforeach; ?>
                 <?php if (count($overdueLoans) > 5): ?>
-                    <div style="color: #dc2626; font-weight: bold;">
+                    <div style="color: #c53030; font-weight: bold;">
                         Dan <?= count($overdueLoans) - 5 ?> pinjaman terlambat lainnya...
                     </div>
                 <?php endif; ?>
@@ -371,7 +376,7 @@
 
     <!-- Data Table -->
     <div class="table-container">
-        <div class="table-header">🤝 Daftar Pinjaman Sarana Prasarana</div>
+        <div class="table-header">DAFTAR PINJAMAN SARANA PRASARANA</div>
         <table>
             <thead>
                 <tr>
@@ -406,14 +411,14 @@
                         <td class="text-center">
                             <?php if ($loan['status'] === 'active'): ?>
                                 <?php if ($isOverdue): ?>
-                                    <span class="badge danger">Terlambat</span>
+                                    <span class="badge overdue">Terlambat</span>
                                 <?php else: ?>
-                                    <span class="badge primary">Aktif</span>
+                                    <span class="badge active">Aktif</span>
                                 <?php endif; ?>
                             <?php elseif ($loan['status'] === 'returned'): ?>
-                                <span class="badge success">Dikembalikan</span>
+                                <span class="badge returned">Dikembalikan</span>
                             <?php else: ?>
-                                <span class="badge warning">Overdue</span>
+                                <span class="badge overdue">Overdue</span>
                             <?php endif; ?>
                         </td>
                         <td class="text-center">
@@ -447,13 +452,11 @@
 
     <!-- Footer -->
     <div class="footer">
-        <div>
-            <div style="font-size: 10px; color: #64748b;">
-                <strong>Catatan:</strong><br>
-                • Laporan ini dibuat secara otomatis oleh sistem<br>
-                • Pinjaman terlambat perlu ditindaklanjuti segera<br>
-                • Koordinasi dengan peminjam untuk pengembalian
-            </div>
+        <div class="notes">
+            <strong>Catatan:</strong><br>
+            • Laporan ini dibuat secara otomatis oleh sistem<br>
+            • Pinjaman terlambat perlu ditindaklanjuti segera<br>
+            • Koordinasi dengan peminjam untuk pengembalian
         </div>
 
         <div class="signature-section">

@@ -7,7 +7,7 @@
     <title><?= $title ?></title>
     <style>
         @page {
-            margin: 1cm;
+            margin: 2cm 1.5cm;
             size: A4;
         }
 
@@ -19,150 +19,125 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            font-size: 12px;
-            line-height: 1.4;
-            color: #333;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #2d3748;
             background: white;
         }
 
         .header {
             text-align: center;
-            border-bottom: 3px solid #2563eb;
+            border-bottom: 2px solid #2d3748;
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .logo {
-            width: 60px;
-            height: 60px;
-            margin-right: 15px;
-        }
-
         .school-info h1 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
-            color: #1e293b;
-            margin-bottom: 5px;
+            color: #1a202c;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         .school-info h2 {
             font-size: 16px;
-            color: #475569;
-            margin-bottom: 5px;
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
 
         .school-info p {
             font-size: 11px;
-            color: #64748b;
+            color: #718096;
+            line-height: 1.4;
         }
 
         .report-title {
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #2d3748;
+            padding: 20px;
+            margin: 30px 0;
             text-align: center;
         }
 
         .report-title h3 {
             font-size: 18px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 600;
         }
 
         .report-title p {
             font-size: 12px;
-            opacity: 0.9;
+            color: #4a5568;
         }
 
         .meta-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
-            font-size: 11px;
-            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 10px;
+            color: #718096;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+
+        .stats-section {
+            margin-bottom: 30px;
+        }
+
+        .stats-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 15px;
-            margin-bottom: 30px;
         }
 
         .stat-card {
-            background: #f8fafc;
+            background: #f7fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
             padding: 15px;
             text-align: center;
-            position: relative;
-        }
-
-        .stat-card.primary {
-            border-left: 4px solid #2563eb;
-        }
-
-        .stat-card.success {
-            border-left: 4px solid #16a34a;
-        }
-
-        .stat-card.warning {
-            border-left: 4px solid #ea580c;
-        }
-
-        .stat-card.danger {
-            border-left: 4px solid #dc2626;
         }
 
         .stat-number {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 5px;
-        }
-
-        .stat-card.primary .stat-number {
-            color: #2563eb;
-        }
-
-        .stat-card.success .stat-number {
-            color: #16a34a;
-        }
-
-        .stat-card.warning .stat-number {
-            color: #ea580c;
-        }
-
-        .stat-card.danger .stat-number {
-            color: #dc2626;
+            color: #2d3748;
         }
 
         .stat-label {
             font-size: 11px;
-            color: #64748b;
+            color: #718096;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .table-container {
             background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 25px;
         }
 
         .table-header {
-            background: #1e293b;
+            background: #2d3748;
             color: white;
-            padding: 12px 15px;
-            font-weight: bold;
+            padding: 15px;
+            font-weight: 600;
             font-size: 14px;
+            text-align: center;
         }
 
         table {
@@ -172,11 +147,11 @@
         }
 
         th {
-            background: #f1f5f9;
-            color: #1e293b;
+            background: #f7fafc;
+            color: #2d3748;
             padding: 12px 8px;
             text-align: left;
-            font-weight: bold;
+            font-weight: 600;
             border-bottom: 2px solid #e2e8f0;
             font-size: 10px;
         }
@@ -185,42 +160,37 @@
             padding: 10px 8px;
             border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
+            font-size: 10px;
         }
 
         tr:nth-child(even) {
-            background: #f8fafc;
-        }
-
-        tr:hover {
-            background: #f1f5f9;
+            background: #f7fafc;
         }
 
         .badge {
             display: inline-block;
             padding: 4px 8px;
-            border-radius: 4px;
+            border: 1px solid #e2e8f0;
             font-size: 9px;
-            font-weight: bold;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            background: white;
         }
 
-        .badge.success {
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #bbf7d0;
+        .badge.baik {
+            border-color: #38a169;
+            color: #2f855a;
         }
 
-        .badge.warning {
-            background: #fef3c7;
-            color: #92400e;
-            border: 1px solid #fde68a;
+        .badge.rusak {
+            border-color: #dd6b20;
+            color: #c05621;
         }
 
-        .badge.danger {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
+        .badge.hilang {
+            border-color: #e53e3e;
+            color: #c53030;
         }
 
         .currency {
@@ -236,10 +206,33 @@
             text-align: right;
         }
 
+        .summary-info {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            margin-top: 25px;
+            font-size: 11px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+
+        .summary-row:last-child {
+            margin-bottom: 0;
+            font-weight: 600;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
         .footer {
             margin-top: 40px;
             border-top: 2px solid #e2e8f0;
-            padding-top: 20px;
+            padding-top: 25px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
@@ -247,37 +240,21 @@
 
         .signature-section {
             text-align: center;
-            min-width: 200px;
+            min-width: 180px;
+            font-size: 11px;
         }
 
         .signature-line {
-            border-top: 1px solid #64748b;
-            margin-top: 60px;
+            border-top: 1px solid #718096;
+            margin-top: 50px;
             padding-top: 5px;
-            font-size: 11px;
-            color: #64748b;
+            color: #718096;
         }
 
-        .summary-info {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 12px;
-            margin-top: 20px;
-            font-size: 11px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
-
-        .summary-row:last-child {
-            margin-bottom: 0;
-            font-weight: bold;
-            border-top: 1px solid #d1d5db;
-            padding-top: 5px;
+        .notes {
+            font-size: 10px;
+            color: #718096;
+            line-height: 1.4;
         }
 
         /* Print optimizations */
@@ -295,26 +272,16 @@
                 break-inside: avoid;
             }
         }
-
-        .page-break {
-            page-break-before: always;
-        }
-
-        .no-break {
-            break-inside: avoid;
-        }
     </style>
 </head>
 
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="logo-section">
-            <div class="school-info">
-                <h1>SMK ABDURRAB PEKANBARU</h1>
-                <h2>Sistem Manajemen Sarana & Prasarana</h2>
-                <p>Jl. Contoh Alamat No. 123, Pekanbaru, Riau 28000 | Tel: (0761) 123456 | Email: info@smkabdurrab.sch.id</p>
-            </div>
+        <div class="school-info">
+            <h1>SMK ABDURRAB PEKANBARU</h1>
+            <h2>Sistem Manajemen Sarana & Prasarana</h2>
+            <p>Jl. Contoh Alamat No. 123, Pekanbaru, Riau 28000 | Tel: (0761) 123456 | Email: info@smkabdurrab.sch.id</p>
         </div>
     </div>
 
@@ -326,42 +293,37 @@
 
     <!-- Meta Information -->
     <div class="meta-info">
-        <div>
-            <strong>Tanggal Cetak:</strong> <?= $date ?>
-        </div>
-        <div>
-            <strong>Waktu Cetak:</strong> <?= $time ?> WIB
-        </div>
-        <div>
-            <strong>Dicetak oleh:</strong> <?= session()->get('full_name') ?>
-        </div>
+        <div><strong>Tanggal Cetak:</strong> <?= $date ?></div>
+        <div><strong>Waktu Cetak:</strong> <?= $time ?> WIB</div>
+        <div><strong>Dicetak oleh:</strong> <?= session()->get('full_name') ?></div>
     </div>
 
     <!-- Statistics -->
-    <div class="stats-grid">
-        <div class="stat-card primary">
-            <div class="stat-number"><?= $stats['total'] ?></div>
-            <div class="stat-label">Total Barang</div>
-        </div>
-        <div class="stat-card success">
-            <div class="stat-number"><?= $stats['good'] ?></div>
-            <div class="stat-label">Kondisi Baik</div>
-        </div>
-        <div class="stat-card warning">
-            <div class="stat-number"><?= $stats['damaged'] ?></div>
-            <div class="stat-label">Kondisi Rusak</div>
-        </div>
-        <div class="stat-card danger">
-            <div class="stat-number"><?= $stats['lost'] ?></div>
-            <div class="stat-label">Hilang</div>
+    <div class="stats-section">
+        <div class="stats-title">RINGKASAN STATISTIK</div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['total'] ?></div>
+                <div class="stat-label">Total Barang</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['good'] ?></div>
+                <div class="stat-label">Kondisi Baik</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['damaged'] ?></div>
+                <div class="stat-label">Kondisi Rusak</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['lost'] ?></div>
+                <div class="stat-label">Hilang</div>
+            </div>
         </div>
     </div>
 
     <!-- Data Table -->
     <div class="table-container">
-        <div class="table-header">
-            <i class="fas fa-boxes"></i> Daftar Inventaris Barang
-        </div>
+        <div class="table-header">DAFTAR INVENTARIS BARANG</div>
         <table>
             <thead>
                 <tr>
@@ -387,13 +349,7 @@
                         <td><?= $item['category_name'] ?></td>
                         <td class="text-center"><?= $item['quantity'] ?></td>
                         <td class="text-center">
-                            <?php if ($item['condition_status'] === 'baik'): ?>
-                                <span class="badge success">Baik</span>
-                            <?php elseif ($item['condition_status'] === 'rusak'): ?>
-                                <span class="badge warning">Rusak</span>
-                            <?php else: ?>
-                                <span class="badge danger">Hilang</span>
-                            <?php endif; ?>
+                            <span class="badge <?= $item['condition_status'] ?>"><?= ucfirst($item['condition_status']) ?></span>
                         </td>
                         <td><?= $item['location'] ?></td>
                         <td class="currency">Rp <?= number_format($item['price'], 0, ',', '.') ?></td>
@@ -425,13 +381,11 @@
 
     <!-- Footer -->
     <div class="footer">
-        <div>
-            <div style="font-size: 10px; color: #64748b;">
-                <strong>Catatan:</strong><br>
-                • Laporan ini dibuat secara otomatis oleh sistem<br>
-                • Data yang ditampilkan akurat sesuai database pada waktu cetak<br>
-                • Untuk verifikasi, hubungi bagian administrasi
-            </div>
+        <div class="notes">
+            <strong>Catatan:</strong><br>
+            • Laporan ini dibuat secara otomatis oleh sistem<br>
+            • Data yang ditampilkan akurat sesuai database pada waktu cetak<br>
+            • Untuk verifikasi, hubungi bagian administrasi
         </div>
 
         <div class="signature-section">
@@ -452,7 +406,6 @@
     </div>
 
     <script>
-        // Auto print when page loads
         window.onload = function() {
             window.print();
         }

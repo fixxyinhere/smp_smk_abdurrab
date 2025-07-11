@@ -10,7 +10,7 @@
     <title><?= $title ?></title>
     <style>
         @page {
-            margin: 1cm;
+            margin: 2cm 1.5cm;
             size: A4;
         }
 
@@ -22,152 +22,140 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            font-size: 12px;
-            line-height: 1.4;
-            color: #333;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #2d3748;
             background: white;
         }
 
         .header {
             text-align: center;
-            border-bottom: 3px solid #0ea5e9;
+            border-bottom: 2px solid #2d3748;
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
 
         .school-info h1 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
-            color: #1e293b;
-            margin-bottom: 5px;
+            color: #1a202c;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         .school-info h2 {
             font-size: 16px;
-            color: #475569;
-            margin-bottom: 5px;
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
 
         .school-info p {
             font-size: 11px;
-            color: #64748b;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        .confidential-notice {
+            background: #fffbf0;
+            border: 1px solid #fde68a;
+            border-left: 3px solid #d69e2e;
+            padding: 12px;
+            margin-bottom: 25px;
+            font-size: 10px;
+        }
+
+        .confidential-title {
+            font-weight: bold;
+            color: #b7791f;
+            margin-bottom: 5px;
+            font-size: 11px;
         }
 
         .report-title {
-            background: linear-gradient(135deg, #0ea5e9, #06b6d4);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #2d3748;
+            padding: 20px;
+            margin: 30px 0;
             text-align: center;
         }
 
         .report-title h3 {
             font-size: 18px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 600;
         }
 
         .report-title p {
             font-size: 12px;
-            opacity: 0.9;
+            color: #4a5568;
         }
 
         .meta-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
-            font-size: 11px;
-            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 10px;
+            color: #718096;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+
+        .stats-section {
+            margin-bottom: 30px;
+        }
+
+        .stats-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 10px;
-            margin-bottom: 30px;
         }
 
         .stat-card {
-            background: #f8fafc;
+            background: #f7fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
             padding: 12px;
             text-align: center;
-        }
-
-        .stat-card.primary {
-            border-left: 4px solid #2563eb;
-        }
-
-        .stat-card.danger {
-            border-left: 4px solid #dc2626;
-        }
-
-        .stat-card.warning {
-            border-left: 4px solid #ea580c;
-        }
-
-        .stat-card.info {
-            border-left: 4px solid #0ea5e9;
-        }
-
-        .stat-card.success {
-            border-left: 4px solid #16a34a;
-        }
-
-        .stat-card.secondary {
-            border-left: 4px solid #64748b;
         }
 
         .stat-number {
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 5px;
-        }
-
-        .stat-card.primary .stat-number {
-            color: #2563eb;
-        }
-
-        .stat-card.danger .stat-number {
-            color: #dc2626;
-        }
-
-        .stat-card.warning .stat-number {
-            color: #ea580c;
-        }
-
-        .stat-card.info .stat-number {
-            color: #0ea5e9;
-        }
-
-        .stat-card.success .stat-number {
-            color: #16a34a;
-        }
-
-        .stat-card.secondary .stat-number {
-            color: #64748b;
+            color: #2d3748;
         }
 
         .stat-label {
             font-size: 10px;
-            color: #64748b;
+            color: #718096;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .role-breakdown {
-            background: #f8fafc;
+            background: #f7fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .role-breakdown-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #1e293b;
-            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #2d3748;
+            font-size: 13px;
         }
 
         .role-grid {
@@ -181,23 +169,23 @@
             justify-content: space-between;
             padding: 8px 12px;
             background: white;
-            border-radius: 6px;
             border: 1px solid #e2e8f0;
+            font-size: 10px;
         }
 
         .table-container {
             background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 25px;
         }
 
         .table-header {
-            background: #1e293b;
+            background: #2d3748;
             color: white;
-            padding: 12px 15px;
-            font-weight: bold;
+            padding: 15px;
+            font-weight: 600;
             font-size: 14px;
+            text-align: center;
         }
 
         table {
@@ -207,92 +195,114 @@
         }
 
         th {
-            background: #f1f5f9;
-            color: #1e293b;
-            padding: 10px 6px;
+            background: #f7fafc;
+            color: #2d3748;
+            padding: 12px 8px;
             text-align: left;
-            font-weight: bold;
+            font-weight: 600;
             border-bottom: 2px solid #e2e8f0;
-            font-size: 9px;
+            font-size: 10px;
         }
 
         td {
-            padding: 8px 6px;
+            padding: 10px 8px;
             border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
-            font-size: 9px;
+            font-size: 10px;
         }
 
         tr:nth-child(even) {
-            background: #f8fafc;
+            background: #f7fafc;
         }
 
         .badge {
             display: inline-block;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 8px;
-            font-weight: bold;
+            padding: 4px 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 9px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            background: white;
         }
 
-        .badge.danger {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
+        .badge.admin {
+            border-color: #e53e3e;
+            color: #c53030;
         }
 
-        .badge.warning {
-            background: #fef3c7;
-            color: #92400e;
-            border: 1px solid #fde68a;
+        .badge.kepsek {
+            border-color: #dd6b20;
+            color: #c05621;
         }
 
-        .badge.info {
-            background: #dbeafe;
-            color: #1e40af;
-            border: 1px solid #bfdbfe;
+        .badge.user {
+            border-color: #3182ce;
+            color: #2c5282;
         }
 
-        .badge.success {
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #bbf7d0;
+        .badge.active {
+            border-color: #38a169;
+            color: #2f855a;
         }
 
-        .badge.secondary {
-            background: #f1f5f9;
-            color: #475569;
-            border: 1px solid #e2e8f0;
+        .badge.inactive {
+            border-color: #718096;
+            color: #4a5568;
         }
 
         .summary-info {
-            background: #f8fafc;
+            background: #f7fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 12px;
-            margin-top: 20px;
+            padding: 15px;
+            margin-top: 25px;
             font-size: 11px;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            padding: 4px 0;
         }
 
         .summary-row:last-child {
             margin-bottom: 0;
-            font-weight: bold;
-            border-top: 1px solid #d1d5db;
-            padding-top: 5px;
+            font-weight: 600;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .security-notes {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            margin-top: 25px;
+            font-size: 10px;
+        }
+
+        .security-notes-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2d3748;
+            font-size: 11px;
+        }
+
+        .security-notes ul {
+            margin-left: 15px;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        .security-notes li {
+            margin-bottom: 3px;
         }
 
         .footer {
             margin-top: 40px;
             border-top: 2px solid #e2e8f0;
-            padding-top: 20px;
+            padding-top: 25px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
@@ -300,35 +310,41 @@
 
         .signature-section {
             text-align: center;
-            min-width: 200px;
+            min-width: 180px;
+            font-size: 11px;
         }
 
         .signature-line {
-            border-top: 1px solid #64748b;
-            margin-top: 60px;
+            border-top: 1px solid #718096;
+            margin-top: 50px;
             padding-top: 5px;
-            font-size: 11px;
-            color: #64748b;
+            color: #718096;
         }
 
         .text-center {
             text-align: center;
         }
 
-        .confidential-notice {
-            background: #fef3c7;
-            border: 1px solid #fde68a;
-            border-left: 4px solid #f59e0b;
-            border-radius: 6px;
-            padding: 10px;
-            margin-bottom: 20px;
+        .notes {
             font-size: 10px;
+            color: #718096;
+            line-height: 1.4;
         }
 
-        .confidential-title {
-            font-weight: bold;
-            color: #92400e;
-            margin-bottom: 5px;
+        /* Print optimizations */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .table-container {
+                break-inside: avoid;
+            }
+
+            tr {
+                break-inside: avoid;
+            }
         }
     </style>
 </head>
@@ -345,7 +361,7 @@
 
     <!-- Confidential Notice -->
     <div class="confidential-notice">
-        <div class="confidential-title">🔒 DOKUMEN RAHASIA</div>
+        <div class="confidential-title">DOKUMEN RAHASIA</div>
         <div>Laporan ini berisi data personal pengguna sistem. Hanya untuk keperluan internal administrasi sekolah. Dilarang menyebarluaskan tanpa izin.</div>
     </div>
 
@@ -363,36 +379,39 @@
     </div>
 
     <!-- Statistics -->
-    <div class="stats-grid">
-        <div class="stat-card primary">
-            <div class="stat-number"><?= $stats['total'] ?></div>
-            <div class="stat-label">Total</div>
-        </div>
-        <div class="stat-card danger">
-            <div class="stat-number"><?= $stats['admin'] ?></div>
-            <div class="stat-label">Admin</div>
-        </div>
-        <div class="stat-card warning">
-            <div class="stat-number"><?= $stats['kepsek'] ?></div>
-            <div class="stat-label">Kepsek</div>
-        </div>
-        <div class="stat-card info">
-            <div class="stat-number"><?= $stats['user'] ?></div>
-            <div class="stat-label">User</div>
-        </div>
-        <div class="stat-card success">
-            <div class="stat-number"><?= $stats['active'] ?></div>
-            <div class="stat-label">Aktif</div>
-        </div>
-        <div class="stat-card secondary">
-            <div class="stat-number"><?= $stats['inactive'] ?></div>
-            <div class="stat-label">Tidak Aktif</div>
+    <div class="stats-section">
+        <div class="stats-title">RINGKASAN STATISTIK</div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['total'] ?></div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['admin'] ?></div>
+                <div class="stat-label">Admin</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['kepsek'] ?></div>
+                <div class="stat-label">Kepsek</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['user'] ?></div>
+                <div class="stat-label">User</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['active'] ?></div>
+                <div class="stat-label">Aktif</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $stats['inactive'] ?></div>
+                <div class="stat-label">Tidak Aktif</div>
+            </div>
         </div>
     </div>
 
     <!-- Role Breakdown -->
     <div class="role-breakdown">
-        <div class="role-breakdown-title">📊 Distribusi Pengguna Berdasarkan Role</div>
+        <div class="role-breakdown-title">DISTRIBUSI PENGGUNA BERDASARKAN ROLE</div>
         <div class="role-grid">
             <div class="role-item">
                 <span><strong>Administrator:</strong></span>
@@ -411,7 +430,7 @@
 
     <!-- Data Table -->
     <div class="table-container">
-        <div class="table-header">👥 Daftar Pengguna Sistem</div>
+        <div class="table-header">DAFTAR PENGGUNA SISTEM</div>
         <table>
             <thead>
                 <tr>
@@ -431,22 +450,14 @@
                         <td class="text-center"><?= $no++ ?></td>
                         <td><strong><?= $user['username'] ?></strong></td>
                         <td><?= $user['full_name'] ?></td>
-                        <td style="font-size: 8px;"><?= $user['email'] ?></td>
+                        <td style="font-size: 9px;"><?= $user['email'] ?></td>
                         <td class="text-center">
-                            <?php if ($user['role'] === 'admin'): ?>
-                                <span class="badge danger">Admin</span>
-                            <?php elseif ($user['role'] === 'kepsek'): ?>
-                                <span class="badge warning">Kepsek</span>
-                            <?php else: ?>
-                                <span class="badge info">User</span>
-                            <?php endif; ?>
+                            <span class="badge <?= $user['role'] ?>"><?= ucfirst($user['role']) ?></span>
                         </td>
                         <td class="text-center">
-                            <?php if ($user['status'] === 'active'): ?>
-                                <span class="badge success">Aktif</span>
-                            <?php else: ?>
-                                <span class="badge secondary">Tidak Aktif</span>
-                            <?php endif; ?>
+                            <span class="badge <?= $user['status'] === 'active' ? 'active' : 'inactive' ?>">
+                                <?= $user['status'] === 'active' ? 'Aktif' : 'Tidak Aktif' ?>
+                            </span>
                         </td>
                         <td><?= date('d/m/Y', strtotime($user['created_at'])) ?></td>
                     </tr>
@@ -476,9 +487,9 @@
     </div>
 
     <!-- Security Notes -->
-    <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; margin-top: 20px; font-size: 10px;">
-        <div style="font-weight: bold; margin-bottom: 8px; color: #1e293b;">🔐 Catatan Keamanan:</div>
-        <ul style="margin-left: 15px; color: #64748b;">
+    <div class="security-notes">
+        <div class="security-notes-title">CATATAN KEAMANAN</div>
+        <ul>
             <li>Pastikan semua pengguna menggunakan password yang kuat</li>
             <li>Review secara berkala akses pengguna yang tidak aktif</li>
             <li>Administrator memiliki akses penuh ke semua fitur sistem</li>
@@ -489,13 +500,11 @@
 
     <!-- Footer -->
     <div class="footer">
-        <div>
-            <div style="font-size: 10px; color: #64748b;">
-                <strong>Catatan:</strong><br>
-                • Dokumen ini bersifat rahasia dan internal<br>
-                • Data personal harus dijaga kerahasiaannya<br>
-                • Hanya untuk keperluan administrasi sekolah
-            </div>
+        <div class="notes">
+            <strong>Catatan:</strong><br>
+            • Dokumen ini bersifat rahasia dan internal<br>
+            • Data personal harus dijaga kerahasiaannya<br>
+            • Hanya untuk keperluan administrasi sekolah
         </div>
 
         <div class="signature-section">
