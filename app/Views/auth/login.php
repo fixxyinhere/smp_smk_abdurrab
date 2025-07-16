@@ -307,9 +307,11 @@
         }
 
         .background-credit {
+            text-align: center;
             position: fixed;
-            bottom: 20px;
-            left: 20px;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             color: rgba(255, 255, 255, 0.9);
             font-size: 0.9rem;
             background: var(--glass-bg);
@@ -460,6 +462,10 @@
 </head>
 
 <body>
+    <div class="background-credit">
+        <i class="fas fa-graduation-cap me-2"></i>
+        Selamat datang di Sistem Manajemen Sarana & Prasarana SMK Abdurrab
+    </div>
     <div class="container">
         <div class="login-container">
             <div class="login-header">
@@ -523,10 +529,6 @@
         </div>
     </div>
 
-    <div class="background-credit">
-        <i class="fas fa-graduation-cap me-2"></i>
-        Selamat datang di Sistem Manajemen Sarana & Prasarana SMK Abdurrab
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>

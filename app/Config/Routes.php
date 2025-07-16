@@ -1,5 +1,5 @@
 <?php
-// File: app/Config/Routes.php (Versi tanpa filter - untuk testing sementara)
+// File: app/Config/Routes.php (Updated dengan import Excel support)
 use CodeIgniter\Router\RouteCollection;
 
 /**
@@ -19,7 +19,7 @@ $routes->group('auth', function ($routes) {
 // Dashboard
 $routes->get('dashboard', 'Dashboard::index');
 
-// Items routes
+// Items routes (Updated dengan import Excel)
 $routes->group('items', function ($routes) {
     $routes->get('/', 'Items::index');
     $routes->get('create', 'Items::create');
@@ -28,6 +28,11 @@ $routes->group('items', function ($routes) {
     $routes->get('edit/(:num)', 'Items::edit/$1');
     $routes->post('update/(:num)', 'Items::update/$1');
     $routes->get('delete/(:num)', 'Items::delete/$1');
+
+    // NEW: Import Excel routes
+    $routes->get('import', 'Items::import');
+    $routes->post('process-import', 'Items::processImport');
+    $routes->get('download-template', 'Items::downloadTemplate');
 });
 
 // Categories routes
